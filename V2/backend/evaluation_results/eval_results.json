@@ -1,0 +1,1010 @@
+[
+  {
+    "name": "Szenario 1 — Haupttest (APT29, Finanzsektor)",
+    "payload": {
+      "target_organization": "Atruvia AG",
+      "threat_profile": "APT29",
+      "scope_document": "Kompromittierung des Online-Banking-Systems über Spearphishing gegen Vorstandsmitglieder. Kritische Funktionen: SWIFT-Zahlungsverkehr, Kundendatenbank, Active Directory."
+    },
+    "state": {
+      "user_input": {
+        "target_organization": "Atruvia AG",
+        "scope_document": "Kompromittierung des Online-Banking-Systems über Spearphishing gegen Vorstandsmitglieder. Kritische Funktionen: SWIFT-Zahlungsverkehr, Kundendatenbank, Active Directory.",
+        "threat_profile": "APT29",
+        "additional_context": null
+      },
+      "attack_sketch": {
+        "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+        "target_organization": "Atruvia AG",
+        "threat_actor": "APT29",
+        "phases": [
+          {
+            "phase": "in",
+            "target_assets": [
+              "Vorstandsmitglieder E-Mail-Konten",
+              "Spearphishing-E-Mails"
+            ],
+            "high_level_goals": [
+              "Zugang zu sensiblen Informationen der Vorstandsmitglieder erlangen",
+              "Malware auf den Geräten der Vorstandsmitglieder installieren"
+            ]
+          },
+          {
+            "phase": "through",
+            "target_assets": [
+              "Active Directory",
+              "SWIFT-Zahlungsverkehrssystem",
+              "Kundendatenbank"
+            ],
+            "high_level_goals": [
+              "Lateral Movement innerhalb des Netzwerks durchführen",
+              "Zugriff auf kritische Systeme und Daten erlangen"
+            ]
+          },
+          {
+            "phase": "out",
+            "target_assets": [
+              "SWIFT-Zahlungsverkehr",
+              "Kundendatenbank"
+            ],
+            "high_level_goals": [
+              "Exfiltration von sensiblen Kundendaten",
+              "Manipulation von Zahlungsverkehrstransaktionen"
+            ]
+          }
+        ]
+      },
+      "ttp_scenario": {
+        "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+        "target_organization": "Atruvia AG",
+        "threat_actor": "APT29",
+        "phases": [
+          {
+            "phase": "in",
+            "steps": [
+              {
+                "step_id": 1,
+                "technique_id": "T1566.001",
+                "technique_name": "Spearphishing Attachment",
+                "tactic": "initial-access",
+                "description": "Versand von Spearphishing-E-Mails mit schädlichen Anhängen an Vorstandsmitglieder, um Zugang zu deren E-Mail-Konten zu erlangen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 2,
+                "technique_id": "T1204.002",
+                "technique_name": "Malicious File",
+                "tactic": "execution",
+                "description": "Ausführung der schädlichen Datei, die über die Spearphishing-E-Mail verteilt wurde, um Malware auf den Geräten der Vorstandsmitglieder zu installieren.",
+                "cve_references": [],
+                "temporal_relation_to_next": "SIM_OV"
+              }
+            ]
+          },
+          {
+            "phase": "through",
+            "steps": [
+              {
+                "step_id": 3,
+                "technique_id": "T1570",
+                "technique_name": "Lateral Tool Transfer",
+                "tactic": "lateral-movement",
+                "description": "Übertragung von Tools innerhalb des Netzwerks, um lateral zu bewegen und Zugriff auf Active Directory und andere kritische Systeme zu erlangen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 4,
+                "technique_id": "T1021.008",
+                "technique_name": "Direct Cloud VM Connections",
+                "tactic": "lateral-movement",
+                "description": "Nutzung von direkten Verbindungen zu Cloud-VMs, um sich lateral innerhalb des Netzwerks zu bewegen und auf das SWIFT-Zahlungsverkehrssystem und die Kundendatenbank zuzugreifen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "SIM_OV"
+              }
+            ]
+          },
+          {
+            "phase": "out",
+            "steps": [
+              {
+                "step_id": 5,
+                "technique_id": "T1029",
+                "technique_name": "Scheduled Transfer",
+                "tactic": "exfiltration",
+                "description": "Geplante Übertragung von sensiblen Kundendaten aus der Kundendatenbank über das SWIFT-Zahlungsverkehrssystem.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 6,
+                "technique_id": "T1020",
+                "technique_name": "Automated Exfiltration",
+                "tactic": "exfiltration",
+                "description": "Automatisierte Exfiltration von Daten über das Netzwerk, um sicherzustellen, dass die sensiblen Informationen unbemerkt abfließen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "SIM_OV"
+              }
+            ]
+          }
+        ]
+      },
+      "validation_report": {
+        "passed": true,
+        "steps": [
+          {
+            "step_id": 1,
+            "technique_id": "T1566",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 2,
+            "technique_id": "T1204",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 3,
+            "technique_id": "T1570",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 4,
+            "technique_id": "T1021",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 5,
+            "technique_id": "T1029",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 6,
+            "technique_id": "T1020",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          }
+        ],
+        "correction_hints": [],
+        "auditor_iterations": 3
+      },
+      "correction_hints": [],
+      "auditor_iterations": 3,
+      "human_approved": true,
+      "report": {
+        "msel": {
+          "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+          "target_organization": "Atruvia AG",
+          "threat_actor": "APT29",
+          "events": [
+            {
+              "order": 1,
+              "phase": "in",
+              "technique_id": "T1566.001",
+              "technique_name": "Spearphishing Attachment",
+              "tactic": "initial-access",
+              "description": "Versand von Spearphishing-E-Mails mit schädlichen Anhängen an Vorstandsmitglieder, um Zugang zu deren E-Mail-Konten zu erlangen.",
+              "cve_references": []
+            },
+            {
+              "order": 2,
+              "phase": "in",
+              "technique_id": "T1204.002",
+              "technique_name": "Malicious File",
+              "tactic": "execution",
+              "description": "Ausführung der schädlichen Datei, die über die Spearphishing-E-Mail verteilt wurde, um Malware auf den Geräten der Vorstandsmitglieder zu installieren.",
+              "cve_references": []
+            },
+            {
+              "order": 3,
+              "phase": "through",
+              "technique_id": "T1570",
+              "technique_name": "Lateral Tool Transfer",
+              "tactic": "lateral-movement",
+              "description": "Übertragung von Tools innerhalb des Netzwerks, um lateral zu bewegen und Zugriff auf Active Directory und andere kritische Systeme zu erlangen.",
+              "cve_references": []
+            },
+            {
+              "order": 4,
+              "phase": "through",
+              "technique_id": "T1021.008",
+              "technique_name": "Direct Cloud VM Connections",
+              "tactic": "lateral-movement",
+              "description": "Nutzung von direkten Verbindungen zu Cloud-VMs, um sich lateral innerhalb des Netzwerks zu bewegen und auf das SWIFT-Zahlungsverkehrssystem und die Kundendatenbank zuzugreifen.",
+              "cve_references": []
+            },
+            {
+              "order": 5,
+              "phase": "out",
+              "technique_id": "T1029",
+              "technique_name": "Scheduled Transfer",
+              "tactic": "exfiltration",
+              "description": "Geplante Übertragung von sensiblen Kundendaten aus der Kundendatenbank über das SWIFT-Zahlungsverkehrssystem.",
+              "cve_references": []
+            },
+            {
+              "order": 6,
+              "phase": "out",
+              "technique_id": "T1020",
+              "technique_name": "Automated Exfiltration",
+              "tactic": "exfiltration",
+              "description": "Automatisierte Exfiltration von Daten über das Netzwerk, um sicherzustellen, dass die sensiblen Informationen unbemerkt abfließen.",
+              "cve_references": []
+            }
+          ]
+        },
+        "narrative": "Im vorliegenden MSEL-Szenario wird ein gezielter Cyberangriff auf die Atruvia AG durch die Bedrohungsakteure von APT29 skizziert. Der Angriff gliedert sich in drei Phasen: In der ersten Phase (in) erfolgt der Versand von Spearphishing-E-Mails mit schädlichen Anhängen an Vorstandsmitglieder, gefolgt von der Ausführung der Malware, die auf deren Geräten installiert wird. In der zweiten Phase (through) nutzen die Angreifer Techniken wie die Übertragung von Tools innerhalb des Netzwerks und direkte Verbindungen zu Cloud-VMs, um sich lateral zu bewegen und Zugriff auf kritische Systeme wie das SWIFT-Zahlungsverkehrssystem zu erlangen. Schließlich erfolgt in der dritten Phase (out) die geplante und automatisierte Exfiltration sensibler Kundendaten aus der Datenbank, um diese unbemerkt abzuleiten."
+      },
+      "error": null
+    },
+    "metrics": {
+      "technique_ids": [
+        "T1566.001",
+        "T1204.002",
+        "T1570",
+        "T1021.008",
+        "T1029",
+        "T1020"
+      ],
+      "tactic_match_per_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tactic_match_all_true": true,
+      "correction_hints_count": 0,
+      "suggested_technique_ids": [],
+      "auditor_iterations": 3,
+      "report_passed": true
+    }
+  },
+  {
+    "name": "Szenario 2 — Generalisierung (Lazarus Group)",
+    "payload": {
+      "target_organization": "Deutsche Bundesbank",
+      "threat_profile": "Lazarus Group",
+      "scope_document": "Supply-Chain-Angriff über kompromittierten IT-Dienstleister. Kritische Funktionen: Interbanken-Kommunikation, HSM-Schlüsselverwaltung, SWIFT-Gateway."
+    },
+    "state": {
+      "user_input": {
+        "target_organization": "Deutsche Bundesbank",
+        "scope_document": "Supply-Chain-Angriff über kompromittierten IT-Dienstleister. Kritische Funktionen: Interbanken-Kommunikation, HSM-Schlüsselverwaltung, SWIFT-Gateway.",
+        "threat_profile": "Lazarus Group",
+        "additional_context": null
+      },
+      "attack_sketch": {
+        "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+        "target_organization": "Deutsche Bundesbank",
+        "threat_actor": "Lazarus Group",
+        "phases": [
+          {
+            "phase": "in",
+            "target_assets": [
+              "IT-Dienstleister",
+              "Zugangsdaten zu internen Systemen"
+            ],
+            "high_level_goals": [
+              "Erlangen des Zugangs zu kritischen Systemen der Deutschen Bundesbank",
+              "Kompromittierung des IT-Dienstleisters zur Erleichterung des Angriffs"
+            ]
+          },
+          {
+            "phase": "through",
+            "target_assets": [
+              "Interbanken-Kommunikationssysteme",
+              "HSM (Hardware Security Module) für Schlüsselverwaltung"
+            ],
+            "high_level_goals": [
+              "Lateral Movement innerhalb des Netzwerks der Deutschen Bundesbank",
+              "Zugriff auf kritische Funktionen zur Manipulation von Transaktionen"
+            ]
+          },
+          {
+            "phase": "out",
+            "target_assets": [
+              "SWIFT-Gateway",
+              "Datenbanken mit sensiblen Finanzdaten"
+            ],
+            "high_level_goals": [
+              "Exfiltration von sensiblen Daten und Transaktionsinformationen",
+              "Verursachung von finanziellen Schäden und Vertrauensverlust"
+            ]
+          }
+        ]
+      },
+      "ttp_scenario": {
+        "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+        "target_organization": "Deutsche Bundesbank",
+        "threat_actor": "Lazarus Group",
+        "phases": [
+          {
+            "phase": "in",
+            "steps": [
+              {
+                "step_id": 1,
+                "technique_id": "T1566.001",
+                "technique_name": "Spearphishing Attachment",
+                "tactic": "initial-access",
+                "description": "Der Angreifer sendet eine gezielte E-Mail mit einem schädlichen Anhang an Mitarbeiter des IT-Dienstleisters, um Zugangsdaten zu internen Systemen zu erlangen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 2,
+                "technique_id": "T1078",
+                "technique_name": "Valid Accounts",
+                "tactic": "credential-access",
+                "description": "Nach dem erfolgreichen Phishing-Angriff verwendet der Angreifer die erlangten Zugangsdaten, um sich in die Systeme des IT-Dienstleisters einzuloggen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              }
+            ]
+          },
+          {
+            "phase": "through",
+            "steps": [
+              {
+                "step_id": 3,
+                "technique_id": "T1570",
+                "technique_name": "Lateral Tool Transfer",
+                "tactic": "lateral-movement",
+                "description": "Der Angreifer überträgt Tools zur Durchführung von lateral movement innerhalb des Netzwerks der Deutschen Bundesbank, um auf Interbanken-Kommunikationssysteme zuzugreifen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 4,
+                "technique_id": "T1021.002",
+                "technique_name": "SMB/Windows Admin Shares",
+                "tactic": "lateral-movement",
+                "description": "Der Angreifer nutzt SMB-Protokolle, um sich lateral zu bewegen und auf kritische Systeme zuzugreifen, einschließlich HSM für Schlüsselverwaltung.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              }
+            ]
+          },
+          {
+            "phase": "out",
+            "steps": [
+              {
+                "step_id": 5,
+                "technique_id": "T1020",
+                "technique_name": "Automated Exfiltration",
+                "tactic": "exfiltration",
+                "description": "Der Angreifer exfiltriert sensible Daten und Transaktionsinformationen automatisiert über das SWIFT-Gateway.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 6,
+                "technique_id": "T1029",
+                "technique_name": "Scheduled Transfer",
+                "tactic": "exfiltration",
+                "description": "Der Angreifer plant regelmäßige Transfers von sensiblen Finanzdaten aus den Datenbanken der Deutschen Bundesbank, um die Exfiltration zu verschleiern.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              }
+            ]
+          }
+        ]
+      },
+      "validation_report": {
+        "passed": true,
+        "steps": [
+          {
+            "step_id": 1,
+            "technique_id": "T1566",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 2,
+            "technique_id": "T1078",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 3,
+            "technique_id": "T1570",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 4,
+            "technique_id": "T1021",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 5,
+            "technique_id": "T1020",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 6,
+            "technique_id": "T1029",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          }
+        ],
+        "correction_hints": [],
+        "auditor_iterations": 3
+      },
+      "correction_hints": [],
+      "auditor_iterations": 3,
+      "human_approved": true,
+      "report": {
+        "msel": {
+          "scenario_id": "b1c2d3e4-f5a6-7b8c-9d0e-f1a2b3c4d5e6",
+          "target_organization": "Deutsche Bundesbank",
+          "threat_actor": "Lazarus Group",
+          "events": [
+            {
+              "order": 1,
+              "phase": "in",
+              "technique_id": "T1566.001",
+              "technique_name": "Spearphishing Attachment",
+              "tactic": "initial-access",
+              "description": "Der Angreifer sendet eine gezielte E-Mail mit einem schädlichen Anhang an Mitarbeiter des IT-Dienstleisters, um Zugangsdaten zu internen Systemen zu erlangen.",
+              "cve_references": []
+            },
+            {
+              "order": 2,
+              "phase": "in",
+              "technique_id": "T1078",
+              "technique_name": "Valid Accounts",
+              "tactic": "credential-access",
+              "description": "Nach dem erfolgreichen Phishing-Angriff verwendet der Angreifer die erlangten Zugangsdaten, um sich in die Systeme des IT-Dienstleisters einzuloggen.",
+              "cve_references": []
+            },
+            {
+              "order": 3,
+              "phase": "through",
+              "technique_id": "T1570",
+              "technique_name": "Lateral Tool Transfer",
+              "tactic": "lateral-movement",
+              "description": "Der Angreifer überträgt Tools zur Durchführung von lateral movement innerhalb des Netzwerks der Deutschen Bundesbank, um auf Interbanken-Kommunikationssysteme zuzugreifen.",
+              "cve_references": []
+            },
+            {
+              "order": 4,
+              "phase": "through",
+              "technique_id": "T1021.002",
+              "technique_name": "SMB/Windows Admin Shares",
+              "tactic": "lateral-movement",
+              "description": "Der Angreifer nutzt SMB-Protokolle, um sich lateral zu bewegen und auf kritische Systeme zuzugreifen, einschließlich HSM für Schlüsselverwaltung.",
+              "cve_references": []
+            },
+            {
+              "order": 5,
+              "phase": "out",
+              "technique_id": "T1020",
+              "technique_name": "Automated Exfiltration",
+              "tactic": "exfiltration",
+              "description": "Der Angreifer exfiltriert sensible Daten und Transaktionsinformationen automatisiert über das SWIFT-Gateway.",
+              "cve_references": []
+            },
+            {
+              "order": 6,
+              "phase": "out",
+              "technique_id": "T1029",
+              "technique_name": "Scheduled Transfer",
+              "tactic": "exfiltration",
+              "description": "Der Angreifer plant regelmäßige Transfers von sensiblen Finanzdaten aus den Datenbanken der Deutschen Bundesbank, um die Exfiltration zu verschleiern.",
+              "cve_references": []
+            }
+          ]
+        },
+        "narrative": "Im vorliegenden MSEL-Szenario wird ein gezielter Cyberangriff der Lazarus Group auf die Deutsche Bundesbank skizziert, der in drei Phasen unterteilt ist: \"in\", \"through\" und \"out\". In der ersten Phase erlangt der Angreifer durch Spearphishing mit einem schädlichen Anhang Zugang zu den Systemen des IT-Dienstleisters, indem er die Zugangsdaten der Mitarbeiter stiehlt. In der darauffolgenden Phase nutzt der Angreifer diese Zugangsdaten, um lateral innerhalb des Netzwerks der Deutschen Bundesbank zu agieren, indem er Tools überträgt und SMB-Protokolle verwendet, um auf kritische Systeme, einschließlich der Hardware-Sicherheitsmodule (HSM) zur Schlüsselverwaltung, zuzugreifen. Schließlich exfiltriert der Angreifer in der letzten Phase automatisiert sensible Daten und plant regelmäßige Transfers von Finanzinformationen über das SWIFT-Gateway, um die Exfiltration zu verschleiern."
+      },
+      "error": null
+    },
+    "metrics": {
+      "technique_ids": [
+        "T1566.001",
+        "T1078",
+        "T1570",
+        "T1021.002",
+        "T1020",
+        "T1029"
+      ],
+      "tactic_match_per_step": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tactic_match_all_true": true,
+      "correction_hints_count": 0,
+      "suggested_technique_ids": [],
+      "auditor_iterations": 3,
+      "report_passed": true
+    }
+  },
+  {
+    "name": "Szenario 3 — Graceful Degradation (FIN13)",
+    "payload": {
+      "target_organization": "Sparkasse Münsterland Ost",
+      "threat_profile": "FIN13",
+      "scope_document": "Ransomware-Angriff auf Kernbanksystem. Kritische Funktionen: Kontoführung, Kartenverarbeitung, Backup-Infrastruktur."
+    },
+    "state": {
+      "user_input": {
+        "target_organization": "Sparkasse Münsterland Ost",
+        "scope_document": "Ransomware-Angriff auf Kernbanksystem. Kritische Funktionen: Kontoführung, Kartenverarbeitung, Backup-Infrastruktur.",
+        "threat_profile": "FIN13",
+        "additional_context": null
+      },
+      "attack_sketch": {
+        "scenario_id": "e1b2c3d4-5678-90ab-cdef-1234567890ab",
+        "target_organization": "Sparkasse Münsterland Ost",
+        "threat_actor": "FIN13",
+        "phases": [
+          {
+            "phase": "in",
+            "target_assets": [
+              "E-Mail-Server",
+              "Mitarbeiter-PCs",
+              "Remote-Desktop-Zugänge"
+            ],
+            "high_level_goals": [
+              "Zugriff auf interne Netzwerke erlangen",
+              "Phishing-Kampagne durchführen",
+              "Schadhafte Software einschleusen"
+            ]
+          },
+          {
+            "phase": "through",
+            "target_assets": [
+              "Kernbanksystem",
+              "Datenbankserver",
+              "Backup-Infrastruktur"
+            ],
+            "high_level_goals": [
+              "Lateral Movement zu kritischen Systemen",
+              "Zugriff auf sensible Daten erlangen",
+              "Verbreitung der Ransomware im Netzwerk"
+            ]
+          },
+          {
+            "phase": "out",
+            "target_assets": [
+              "Kernbanksystem",
+              "Backup-Daten",
+              "Kartenverarbeitungssystem"
+            ],
+            "high_level_goals": [
+              "Daten exfiltrieren",
+              "Ransomware aktivieren und Systeme verschlüsseln",
+              "Erpressung der Organisation zur Zahlung eines Lösegelds"
+            ]
+          }
+        ]
+      },
+      "ttp_scenario": {
+        "scenario_id": "e1b2c3d4-5678-90ab-cdef-1234567890ab",
+        "target_organization": "Sparkasse Münsterland Ost",
+        "threat_actor": "FIN13",
+        "phases": [
+          {
+            "phase": "in",
+            "steps": [
+              {
+                "step_id": 1,
+                "technique_id": "T1566.001",
+                "technique_name": "Phishing: Spear Phishing Link",
+                "tactic": "initial-access",
+                "description": "Der Angreifer sendet gezielte Phishing-E-Mails an Mitarbeiter, um sie dazu zu bringen, auf einen schädlichen Link zu klicken, der Malware herunterlädt.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 2,
+                "technique_id": "T1119",
+                "technique_name": "Automated Collection",
+                "tactic": "collection",
+                "description": "Nach dem erfolgreichen Phishing-Angriff wird automatisiert auf lokale Systeme zugegriffen, um Daten zu sammeln.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 3,
+                "technique_id": "T1071.001",
+                "technique_name": "Application Layer Protocol: Web Protocols",
+                "tactic": "command-and-control",
+                "description": "Der Angreifer nutzt Web-Protokolle, um mit dem kompromittierten System zu kommunizieren und Befehle zu senden.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              }
+            ]
+          },
+          {
+            "phase": "through",
+            "steps": [
+              {
+                "step_id": 4,
+                "technique_id": "T1570",
+                "technique_name": "Lateral Tool Transfer",
+                "tactic": "lateral-movement",
+                "description": "Der Angreifer überträgt Tools lateral zu anderen Systemen im Netzwerk, um die Kontrolle über kritische Systeme zu erlangen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 5,
+                "technique_id": "T1091",
+                "technique_name": "Replication Through Removable Media",
+                "tactic": "initial-access, lateral-movement",
+                "description": "Der Angreifer nutzt tragbare Medien, um sich in andere Systeme im Netzwerk zu replizieren und Zugang zu sensiblen Daten zu erlangen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 6,
+                "technique_id": "T1550.003",
+                "technique_name": "Pass the Ticket",
+                "tactic": "defense-evasion, lateral-movement",
+                "description": "Der Angreifer verwendet gestohlene Tickets, um sich unbefugten Zugang zu anderen Systemen zu verschaffen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              }
+            ]
+          },
+          {
+            "phase": "out",
+            "steps": [
+              {
+                "step_id": 7,
+                "technique_id": "T1020",
+                "technique_name": "Automated Exfiltration",
+                "tactic": "exfiltration",
+                "description": "Der Angreifer exfiltriert automatisch sensible Daten aus dem Netzwerk über verschlüsselte Verbindungen.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 8,
+                "technique_id": "T1531",
+                "technique_name": "Account Access Removal",
+                "tactic": "impact",
+                "description": "Der Angreifer entfernt den Zugriff auf Konten, um die Wiederherstellung der Systeme zu erschweren und die Erpressung zu maximieren.",
+                "cve_references": [],
+                "temporal_relation_to_next": "BEFORE"
+              },
+              {
+                "step_id": 9,
+                "technique_id": "T1029",
+                "technique_name": "Scheduled Transfer",
+                "tactic": "exfiltration",
+                "description": "Der Angreifer plant regelmäßige Übertragungen von Daten, um die Exfiltration über einen längeren Zeitraum zu verschleiern.",
+                "cve_references": [],
+                "temporal_relation_to_next": null
+              }
+            ]
+          }
+        ]
+      },
+      "validation_report": {
+        "passed": false,
+        "steps": [
+          {
+            "step_id": 1,
+            "technique_id": "T1566",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 2,
+            "technique_id": "T1119",
+            "id_exists": true,
+            "tactic_match": false,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 3,
+            "technique_id": "T1071",
+            "id_exists": true,
+            "tactic_match": false,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 4,
+            "technique_id": "T1570",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 5,
+            "technique_id": "T1091",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 6,
+            "technique_id": "T1550",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 7,
+            "technique_id": "T1020",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 8,
+            "technique_id": "T1531",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": true,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          },
+          {
+            "step_id": 9,
+            "technique_id": "T1029",
+            "id_exists": true,
+            "tactic_match": true,
+            "path_reachable": false,
+            "phase_conform": true,
+            "cve_valid": true,
+            "eligibility_score": null
+          }
+        ],
+        "correction_hints": [
+          {
+            "step_id": 2,
+            "technique_id": "T1119",
+            "message": "Taktik passt nicht zur Phase in. Alternativen für FIN13 in Phase in: T1047 (Windows Management Instrumentation), T1053.005 (Scheduled Task), T1059.001 (PowerShell), T1059.003 (Windows Command Shell), T1059.005 (Visual Basic)",
+            "suggested_technique_id": "T1047"
+          },
+          {
+            "step_id": 3,
+            "technique_id": "T1071",
+            "message": "Taktik passt nicht zur Phase in. Alternativen für FIN13 in Phase in: T1047 (Windows Management Instrumentation), T1053.005 (Scheduled Task), T1059.001 (PowerShell), T1059.003 (Windows Command Shell), T1059.005 (Visual Basic)",
+            "suggested_technique_id": "T1047"
+          },
+          {
+            "step_id": 9,
+            "technique_id": "T1029",
+            "message": "Kein kausaler Pfad von T1531 zu T1029.",
+            "suggested_technique_id": null
+          }
+        ],
+        "auditor_iterations": 3
+      },
+      "correction_hints": [
+        {
+          "step_id": 2,
+          "technique_id": "T1119",
+          "message": "Taktik passt nicht zur Phase in. Alternativen für FIN13 in Phase in: T1047 (Windows Management Instrumentation), T1053.005 (Scheduled Task), T1059.001 (PowerShell), T1059.003 (Windows Command Shell), T1059.005 (Visual Basic)",
+          "suggested_technique_id": "T1047"
+        },
+        {
+          "step_id": 3,
+          "technique_id": "T1071",
+          "message": "Taktik passt nicht zur Phase in. Alternativen für FIN13 in Phase in: T1047 (Windows Management Instrumentation), T1053.005 (Scheduled Task), T1059.001 (PowerShell), T1059.003 (Windows Command Shell), T1059.005 (Visual Basic)",
+          "suggested_technique_id": "T1047"
+        },
+        {
+          "step_id": 9,
+          "technique_id": "T1029",
+          "message": "Kein kausaler Pfad von T1531 zu T1029.",
+          "suggested_technique_id": null
+        }
+      ],
+      "auditor_iterations": 4,
+      "human_approved": true,
+      "report": {
+        "msel": {
+          "scenario_id": "e1b2c3d4-5678-90ab-cdef-1234567890ab",
+          "target_organization": "Sparkasse Münsterland Ost",
+          "threat_actor": "FIN13",
+          "events": [
+            {
+              "order": 1,
+              "phase": "in",
+              "technique_id": "T1566.001",
+              "technique_name": "Phishing: Spear Phishing Link",
+              "tactic": "initial-access",
+              "description": "Der Angreifer sendet gezielte Phishing-E-Mails an Mitarbeiter, um sie dazu zu bringen, auf einen schädlichen Link zu klicken, der Malware herunterlädt.",
+              "cve_references": []
+            },
+            {
+              "order": 2,
+              "phase": "in",
+              "technique_id": "T1119",
+              "technique_name": "Automated Collection",
+              "tactic": "collection",
+              "description": "Nach dem erfolgreichen Phishing-Angriff wird automatisiert auf lokale Systeme zugegriffen, um Daten zu sammeln.",
+              "cve_references": []
+            },
+            {
+              "order": 3,
+              "phase": "in",
+              "technique_id": "T1071.001",
+              "technique_name": "Application Layer Protocol: Web Protocols",
+              "tactic": "command-and-control",
+              "description": "Der Angreifer nutzt Web-Protokolle, um mit dem kompromittierten System zu kommunizieren und Befehle zu senden.",
+              "cve_references": []
+            },
+            {
+              "order": 4,
+              "phase": "through",
+              "technique_id": "T1570",
+              "technique_name": "Lateral Tool Transfer",
+              "tactic": "lateral-movement",
+              "description": "Der Angreifer überträgt Tools lateral zu anderen Systemen im Netzwerk, um die Kontrolle über kritische Systeme zu erlangen.",
+              "cve_references": []
+            },
+            {
+              "order": 5,
+              "phase": "through",
+              "technique_id": "T1091",
+              "technique_name": "Replication Through Removable Media",
+              "tactic": "initial-access, lateral-movement",
+              "description": "Der Angreifer nutzt tragbare Medien, um sich in andere Systeme im Netzwerk zu replizieren und Zugang zu sensiblen Daten zu erlangen.",
+              "cve_references": []
+            },
+            {
+              "order": 6,
+              "phase": "through",
+              "technique_id": "T1550.003",
+              "technique_name": "Pass the Ticket",
+              "tactic": "defense-evasion, lateral-movement",
+              "description": "Der Angreifer verwendet gestohlene Tickets, um sich unbefugten Zugang zu anderen Systemen zu verschaffen.",
+              "cve_references": []
+            },
+            {
+              "order": 7,
+              "phase": "out",
+              "technique_id": "T1020",
+              "technique_name": "Automated Exfiltration",
+              "tactic": "exfiltration",
+              "description": "Der Angreifer exfiltriert automatisch sensible Daten aus dem Netzwerk über verschlüsselte Verbindungen.",
+              "cve_references": []
+            },
+            {
+              "order": 8,
+              "phase": "out",
+              "technique_id": "T1531",
+              "technique_name": "Account Access Removal",
+              "tactic": "impact",
+              "description": "Der Angreifer entfernt den Zugriff auf Konten, um die Wiederherstellung der Systeme zu erschweren und die Erpressung zu maximieren.",
+              "cve_references": []
+            },
+            {
+              "order": 9,
+              "phase": "out",
+              "technique_id": "T1029",
+              "technique_name": "Scheduled Transfer",
+              "tactic": "exfiltration",
+              "description": "Der Angreifer plant regelmäßige Übertragungen von Daten, um die Exfiltration über einen längeren Zeitraum zu verschleiern.",
+              "cve_references": []
+            }
+          ]
+        },
+        "narrative": "Im vorliegenden MSEL-Szenario wird die Sparkasse Münsterland Ost von der Bedrohungsgruppe FIN13 angegriffen. Der Angriff gliedert sich in drei Phasen: In der ersten Phase (in) erfolgt der initiale Zugriff durch gezielte Spear-Phishing-E-Mails, die Mitarbeiter dazu verleiten, auf schädliche Links zu klicken, gefolgt von automatisierten Datensammlungen auf den kompromittierten Systemen. In der zweiten Phase (through) nutzt der Angreifer Techniken wie die laterale Tool-Übertragung und die Replikation über tragbare Medien, um sich innerhalb des Netzwerks auszubreiten und kritische Systeme zu kontrollieren. Schließlich exfiltriert der Angreifer in der dritten Phase (out) sensible Daten über verschlüsselte Verbindungen und plant regelmäßige Datenübertragungen, während er gleichzeitig den Zugriff auf Konten entfernt, um die Wiederherstellung der Systeme zu erschweren."
+      },
+      "error": null
+    },
+    "metrics": {
+      "technique_ids": [
+        "T1566.001",
+        "T1119",
+        "T1071.001",
+        "T1570",
+        "T1091",
+        "T1550.003",
+        "T1020",
+        "T1531",
+        "T1029"
+      ],
+      "tactic_match_per_step": [
+        true,
+        false,
+        false,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+      ],
+      "tactic_match_all_true": false,
+      "correction_hints_count": 3,
+      "suggested_technique_ids": [
+        "T1047",
+        "T1047"
+      ],
+      "auditor_iterations": 4,
+      "report_passed": false
+    }
+  }
+]

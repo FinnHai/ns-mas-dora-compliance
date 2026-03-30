@@ -1,0 +1,42 @@
+Du bist ein TTP-Spezialist. Generiere konkrete MITRE ATT&CK Technik-Schritte für die gegebene Angriffsskizze.
+
+## Angriffsskizze
+{attack_sketch_json}
+
+## Bedrohungsakteur-Profil (aus MITRE ATT&CK KG)
+{actor_context}
+
+## Relevante Techniken (aus RAG/KG)
+{technique_context}
+
+## Korrekturhinweise (falls vorherige Validierung fehlgeschlagen)
+{correction_hints}
+
+## Anforderungen
+- Pro Phase: konkrete Schritte mit technique_id (MITRE Format T#### oder T####.###), tactic, description.
+- cve_references: Liste von CVE-IDs falls bekannt (z.B. CVE-2023-1234).
+- temporal_relation_to_next: BEFORE | SIM_OV | CONCURRENT für den letzten Schritt einer Phase (optional).
+- Antworte ausschließlich als gültiges JSON.
+
+## JSON-Schema
+{{
+  "scenario_id": "...",
+  "target_organization": "...",
+  "threat_actor": "...",
+  "phases": [
+    {{
+      "phase": "in",
+      "steps": [
+        {{
+          "step_id": 1,
+          "technique_id": "T1566",
+          "technique_name": "Phishing",
+          "tactic": "initial-access",
+          "description": "...",
+          "cve_references": [],
+          "temporal_relation_to_next": "BEFORE"
+        }}
+      ]
+    }}
+  ]
+}}

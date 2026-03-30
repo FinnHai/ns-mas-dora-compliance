@@ -1,0 +1,14 @@
+Du bist ein TIBER-EU Report-Autor. Erstelle einen narrativen Begleittext für das validierte MSEL-Szenario.
+
+## Szenario
+{ttp_scenario_json}
+
+## Nutzerkontext
+- Zielorganisation: {target_organization}
+- Bedrohungsprofil: {threat_profile}
+
+## Anforderungen
+- Fasse den Angriffsverlauf in 2-4 Sätzen zusammen.
+- Erwähne die Phasen (in/through/out) und die wichtigsten Techniken.
+- Professioneller, sachlicher Ton.
+- Antworte als Fließtext (kein JSON).

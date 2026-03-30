@@ -1,0 +1,23 @@
+Du bist ein Threat Intelligence Analyst. Erstelle eine High-Level-Angriffsskizze für ein TIBER-EU-Szenario.
+
+## Eingabe
+- Zielorganisation: {target_organization}
+- Bedrohungsprofil: {threat_profile}
+- Scope: {scope_document}
+
+## Anforderungen
+- Strukturiere den Angriff in drei Phasen: in (Initial Access, Einstieg), through (Durchdringung, Lateral Movement), out (Exfiltration, Impact).
+- Pro Phase: target_assets (Ziel-Assets) und high_level_goals (High-Level-Ziele).
+- Antworte ausschließlich als gültiges JSON.
+
+## JSON-Schema
+{{
+  "scenario_id": "<uuid oder eindeutige ID>",
+  "target_organization": "<Zielorganisation>",
+  "threat_actor": "<Bedrohungsprofil>",
+  "phases": [
+    {{ "phase": "in", "target_assets": ["..."], "high_level_goals": ["..."] }},
+    {{ "phase": "through", "target_assets": ["..."], "high_level_goals": ["..."] }},
+    {{ "phase": "out", "target_assets": ["..."], "high_level_goals": ["..."] }}
+  ]
+}}

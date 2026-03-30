@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dora-szenario-backend"
+version = "0.1.0"
+description = "Neuro-symbolisches Multi-Agenten-System zur DORA-Szenario-Entwicklung"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Finn Heintzmann" }
+]
+dependencies = [
+    "fastapi>=0.109",
+    "httpx>=0.26",
+    "uvicorn[standard]>=0.27",
+    "langgraph>=0.2",
+    "langchain>=0.1",
+    "langchain-openai>=0.0.6",
+    "neo4j>=5.15",
+    "pydantic>=2.5",
+    "pydantic-settings>=2.1",
+    "python-dotenv>=1.0",
+    "pyyaml>=6.0",
+    "rank_bm25>=0.2.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.23",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+asyncio_mode = "auto"
+markers = [
+    "integration: Integration tests requiring Neo4j (deselect with -m 'not integration')",
+    "slow: Slow tests (e.g. full pipeline build with LangChain)",
+]

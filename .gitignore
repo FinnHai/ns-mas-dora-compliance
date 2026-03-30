@@ -1,0 +1,63 @@
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+*.egg
+
+# Node
+node_modules/
+/dist/
+V1/frontend/dist/
+Clean/frontend/dist/
+build/
+.next/
+out/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# IDE / Editor
+.idea/
+.vscode/
+.cursor/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & Cache
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+
+# LaTeX Build-Artefakte
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.lot
+*.lof
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+
+# Excel (temporäre Sperrdateien)
+~$*.xlsx
+
+# Misc
+ABGABE_GIT.md
+.dora-*.pid
+*.pem
+.vercel

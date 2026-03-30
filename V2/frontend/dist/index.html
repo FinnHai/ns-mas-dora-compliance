@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DORA Szenario-Plattform</title>
+    <script type="module" crossorigin src="/assets/index-w-R80YWG.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CRId9HeF.css">
+  </head>
+  <body>
+    <div id="root">
+      <div id="loading-screen" style="padding:2rem;font-family:system-ui,sans-serif;text-align:center;color:#333;max-width:28rem;margin:0 auto">
+        <p style="font-size:1.1rem;font-weight:500">Lade DORA-Plattform…</p>
+        <p id="loading-status" style="font-size:0.9rem;margin-top:0.75rem;color:#555;min-height:1.2em">Gestartet um <span id="load-time"></span></p>
+        <p style="font-size:0.8rem;margin-top:0.5rem;color:#888">Bei Safari oder langsamer Verbindung kann der erste Ladevorgang 1–2 Minuten dauern. Schau ins Terminal für detaillierte Logs.</p>
+      </div>
+    </div>
+    <script>
+      (function(){
+        var d=new Date();
+        var el=document.getElementById('load-time');
+        if(el) el.textContent=d.toLocaleTimeString('de-DE');
+      })();
+    </script>
+  </body>
+</html>

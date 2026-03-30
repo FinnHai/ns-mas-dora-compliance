@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BA Screenshot Static</title>
+  <style>
+    :root {
+      --bg: #fafaf9;
+      --bg-card: #ffffff;
+      --border: #e7e5e4;
+      --text: #1c1917;
+      --text-muted: #78716c;
+      --accent: #0d9488;
+      --accent-hover: #0f766e;
+      --success: #10b981;
+      --success-bg: #ecfdf5;
+      --error: #ef4444;
+      --error-bg: #fef2f2;
+      --warn: #0f766e;
+      --warn-bg: #ffffff;
+      --radius: 8px;
+      --radius-sm: 6px;
+      --shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 15px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .main { max-width: 640px; margin: 0 auto; padding: 2rem 1.5rem; width: 100%; }
+    .result-box {
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      margin-top: 1rem;
+    }
+    .status-running {
+      background: var(--warn-bg);
+      color: var(--warn);
+      border: 1px solid var(--border);
+    }
+    .hitl-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+      color: white;
+      border-radius: var(--radius);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      box-shadow: var(--shadow);
+    }
+    .result-box h3 { font-size: 1rem; font-weight: 600; margin: 0 0 1rem 0; color: var(--text); }
+    .review-hint { color: var(--text-muted); font-size: 0.9rem; margin: 0 0 1rem 0; }
+    .validation-result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .ttp-meta-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(12rem, 2fr);
+      gap: 1.5rem;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .meta-label { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+    .meta-value { font-weight: 500; color: var(--text); }
+    .events h4 { font-size: 0.85rem; font-weight: 500; color: var(--text-muted); margin: 0 0 0.75rem 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    .event-tactic { font-size: 0.8rem; color: var(--accent); margin-bottom: 0.5rem; }
+    .event { display: grid; grid-template-columns: 1.5rem 5rem 1fr; gap: 0.5rem; padding: 0.35rem 0; font-size: 0.88rem; align-items: start; }
+    .event-order { color: var(--text-muted); font-weight: 500; }
+    .kg-auditor-report { margin-top: 1.25rem; padding: 1rem 0; border-top: 1px solid var(--border); }
+    .kg-auditor-report h4 { margin: 0 0 0.75rem 0; font-size: 1rem; color: var(--text); }
+    .kg-auditor-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-bottom: 0.75rem; font-size: 0.9rem; }
+    .badge { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; font-weight: 500; }
+    .badge.valid { background: var(--success-bg); color: var(--success); }
+    .badge.invalid { background: var(--error-bg); color: var(--error); }
+    .kg-auditor-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg-card); }
+    .kg-auditor-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .kg-auditor-table th, .kg-auditor-table td { padding: 0.45rem 0.6rem; text-align: left; border-bottom: 1px solid var(--border); }
+    .kg-auditor-table th { background: var(--bg); color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+    .kg-auditor-table tbody tr:last-child td { border-bottom: none; }
+    .kg-audit-tech { font-family: ui-monospace, monospace; font-size: 0.8rem; }
+    .kg-audit-cell { text-align: center; }
+    .kg-audit-pf { display: inline-block; min-width: 2.5rem; padding: 0.15rem 0.4rem; border-radius: 4px; font-weight: 600; font-size: 0.75rem; }
+    .kg-audit-pf.pass { background: var(--success-bg); color: var(--success); }
+    .kg-audit-pf.fail { background: var(--error-bg); color: var(--error); }
+    .kg-audit-elig { color: var(--text-muted); }
+    .kg-auditor-hints {
+      margin-top: 1rem;
+      padding: 0.75rem 1rem;
+      background: var(--warn-bg);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+    .kg-auditor-hints ul { margin: 0.5rem 0 0 1.25rem; padding: 0; }
+    .button-row { margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.5rem 1rem; border-radius: var(--radius-sm); font-weight: 500; font-size: 0.9rem;
+      font-family: inherit; border: none; cursor: pointer;
+    }
+    .btn-primary { background: var(--accent); color: white; }
+    .btn-secondary { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="result-box status-running">
+      <div data-screenshot="hitl-review">
+        <div class="hitl-badge">Human-in-the-Loop (DR5) – Freigabe erforderlich</div>
+        <h3>Human Review erforderlich</h3>
+        <p class="review-hint">Bitte prüfen Sie das generierte Szenario und geben Sie es frei oder lehnen Sie ab.</p>
+      </div>
+
+      <div class="validation-result">
+        <div class="ttp-meta-row">
+          <div>
+            <div class="meta-label">Zielorganisation</div>
+            <div class="meta-value">Deutsche Bundesbank</div>
+          </div>
+          <div>
+            <div class="meta-label">Threat Actor</div>
+            <div class="meta-value">Lazarus Group</div>
+          </div>
+        </div>
+        <div class="events">
+          <h4>TTP-Szenario (7 Schritte)</h4>
+          <div class="event-tactic">Phase: in – Initial Access</div>
+          <div class="event"><span class="event-order">1</span><span>T1566.001</span><span>Spearphishing Attachment</span></div>
+          <div class="event-tactic" style="margin-top:0.75rem">Phase: through – Execution, Lateral Movement</div>
+          <div class="event"><span class="event-order">2</span><span>T1047</span><span>WMI-Ausführung</span></div>
+          <div class="event"><span class="event-order">3</span><span>T1570</span><span>Lateral Tool Transfer</span></div>
+          <div class="event"><span class="event-order">4</span><span>T1091</span><span>Replication Through Removable Media</span></div>
+          <div class="event-tactic" style="margin-top:0.75rem">Phase: out – Exfiltration</div>
+          <div class="event"><span class="event-order">5</span><span>T1020</span><span>Automated Exfiltration</span></div>
+          <div class="event"><span class="event-order">6</span><span>T1029</span><span>Scheduled Transfer</span></div>
+          <div class="event"><span class="event-order">7</span><span>T1048</span><span>Exfiltration Over Alternative Protocol</span></div>
+        </div>
+      </div>
+
+      <div class="kg-auditor-report" data-screenshot="kg-auditor">
+        <h4>Validierungsbericht (KG Auditor)</h4>
+        <p class="kg-auditor-meta">
+          <span class="badge invalid">report_failed</span>
+          <span class="kg-auditor-iter">Auditor-Iterationen (kumulativ): <strong>3</strong></span>
+        </p>
+        <div class="kg-auditor-table-wrap">
+          <table class="kg-auditor-table">
+            <thead>
+              <tr>
+                <th>Schritt</th>
+                <th>Technik-ID</th>
+                <th>Technik-ID im Graph</th>
+                <th>Taktik vs. Phase</th>
+                <th>Kill-Chain-Pfad</th>
+                <th>Phasenreihenfolge</th>
+                <th>CVE-Referenzen</th>
+                <th>Eligibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td><td class="kg-audit-tech">T1566.001</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>2</td><td class="kg-audit-tech">T1047</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf fail">Fail</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>3</td><td class="kg-audit-tech">T1570</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf fail">Fail</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>4</td><td class="kg-audit-tech">T1091</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>5</td><td class="kg-audit-tech">T1020</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td class="kg-audit-tech">T1029</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf fail">Fail</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+              <tr>
+                <td>7</td><td class="kg-audit-tech">T1048</td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf fail">Fail</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell"><span class="kg-audit-pf pass">Pass</span></td>
+                <td class="kg-audit-cell kg-audit-elig">—</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="kg-auditor-hints">
+          <strong>Korrekturhinweise</strong>
+          <ul>
+            <li>Schritt 2 (T1047): Taktik-Zuordnung passt nicht zur deklarierten Phase; Vorschlag aus Lazarus-Profil: T1059.</li>
+            <li>Schritt 3 (T1570): Taktik-Mismatch; alternative Technik aus Gruppenprofil prüfen.</li>
+            <li>Schritt 6 (T1029): Kein valider BEFORE-Pfad von T1020 im KG (Kill-Chain-Lücke).</li>
+            <li>Schritt 7 (T1048): Kein Pfad von T1029 zu T1048 in ChronoCTI-Heuristik.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="actions button-row" data-screenshot="hitl-actions">
+        <button type="button" class="btn btn-primary">Freigeben</button>
+        <button type="button" class="btn btn-secondary">Ablehnen</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
